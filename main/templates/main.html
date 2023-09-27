@@ -16,12 +16,12 @@
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Products</a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="/create-product">Add New Product</a></li>
-                    <li><a class="dropdown-item" href="#">Edit Product</a></li>
-                    <li><a class="dropdown-item" href="#">Delete Product</a></li>
                 </ul>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Logout</a>
+                <form action="{% url 'main:logout' %}", method="post">
+                    <a class="nav-link" href="/login" type="submit">Logout</a>
+                </form>
               </li>
             </ul>
             <form class="d-flex" role="search">
