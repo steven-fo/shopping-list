@@ -1,6 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+  .card-container .card:last-child {
+      background-color: lightgoldenrodyellow;
+  }
+
+  .card {
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+      padding: 14px 80px 18px 36px;
+      cursor: pointer;
+  }
+
+  .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+  }
+</style>
+
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">{{name}}</a>
@@ -32,67 +52,71 @@
         </div>
       </nav>
 
-    <h1>Shopping List Page</h1>
+    <div class="py-2 mx-4 text-center">    
+      <h1>Shopping List Page</h1>
 
-    <h5>Name:</h5>
-    <p>{{name}}</p>
+      <h5>Name:</h5>
+      <p>{{name}}</p>
 
-    <h5>Class:</h5>
-    <p>{{class}}</p>
+      <h5>Class:</h5>
+      <p>{{class}}</p>
 
-    <table id="product_table">
+      <h6>Kamu menyimpan {{items.count}} item pada aplikasi ini</h6>
 
-    </table>
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <form id="form" onsubmit="return false;">
-                      {% csrf_token %}
-                      <div class="mb-3">
-                          <label for="name" class="col-form-label">Name:</label>
-                          <input type="text" class="form-control" id="name" name="name"></input>
-                      </div>
-                      <div class="mb-3">
-                          <label for="price" class="col-form-label">Price:</label>
-                          <input type="number" class="form-control" id="price" name="price"></input>
-                      </div>
-                      <div class="mb-3">
-                          <label for="description" class="col-form-label">Description:</label>
-                          <textarea class="form-control" id="description" name="description"></textarea>
-                      </div>
-                  </form>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Product</button>
-              </div>
-          </div>
-      </div>
-    </div>
-
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Product by AJAX</button>
-    
-    <br />
-    
-    <a href="{% url 'main:create_product' %}">
+      <a href="{% url 'main:create_product' %}">
         <button>
             Add New Product
         </button>
-    </a>
+      </a>
 
-    <a href="{% url 'main:logout' %}">
-        <button>
-            Logout
-        </button>
-    </a>
+      <table id="product_table">
 
-    <h5>Sesi terakhir login: {{last_login}}</h5>
+      </table>
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="col-form-label">Price:</label>
+                            <input type="number" class="form-control" id="price" name="price"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Product</button>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Product by AJAX</button>
+      
+      <br />
+      
+      <a href="{% url 'main:create_product' %}">
+          <button>
+              Add New Product
+          </button>
+      </a>
+
+      <h5>Sesi terakhir login: {{last_login}}</h5>
+    </div>
 
     <script>
       async function getProducts() {
